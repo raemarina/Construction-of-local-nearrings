@@ -1,0 +1,35 @@
+LogTo("End32_7all.txt");
+G:=SmallGroup(32,7);
+iso:=IsomorphismPermGroup(G);
+G:=Image(iso);
+Aut:=AutomorphismGroup(G);
+is:=IsomorphismPermGroup(Aut);
+Au:=Image(is);
+Ccs:=ConjugacyClassesSubgroups(Au);;
+Sub:=[];
+for x in Ccs do
+d:=Representative(x);
+Add(Sub,d);
+od;
+Su:=Filtered(Sub,x->Size(x)=16);;
+v:=Size(Su);
+Mul:=[];
+for i in [1..v] do
+c:=PreImage(is,Su[i]);
+Add(Mul,c);
+od;
+U:=Filtered(Mul,x->Maximum(OrbitLengths(x,G))=16);;
+Mult:=AsSet(List(U,IdGroup));;
+k:=Size(Mult);
+Print("\n",k," ");
+View(Mult);
+En:=AllEndomorphisms(G);;
+o:=En[1];
+Nil:=Filtered(En,x->x^5=o);;
+En:=MagmaWithOne(En);
+Print("\n","Size(Nil)=",Size(Nil),"\n");
+h:=function(x,y,z) return x*y*z; end;
+f:=function(x,y) return x*y; end;
+pos:=function(x) return Position(OrbitLengths(x,G),16);end;
+const:=function(a) return function(x) return a^x; end;end;
+Read("End32_7all.g");
